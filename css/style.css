@@ -1,20 +1,48 @@
 
 body{
   margin:0;
-  background-color: orange;
-}
-
-
-td{
-  border: 2px solid black;
-
+  background-color: black;
 }
 
 #board{
   position: absolute;
+  left: 200px;
+  top: 100px;
+}
+
+.cells{
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  position: absolute;
+  border: 2px dashed orange;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  line-height: 100px;
+  color: orange;
+  font-size: 24px;
+}
+
+
+.cells:nth-child(2){
+  top: 0px;
   left: 100px;
-  top: 50px;
-  border-collapse: collapse;
-  width: 600px;
-  height: 600px;
+}
+
+.cells:nth-child(3){
+  top:0px;
+  left: 200px;
+}
+
+#r2{
+  position: absolute;
+  left: 0;
+  top: 100px;
+}
+
+#r3{
+  position: absolute;
+  left: 0;
+  top: 200px;
 }
