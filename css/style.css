@@ -1,0 +1,20 @@
+
+body{
+  margin:0;
+  background-color: orange;
+}
+
+
+td{
+  border: 2px solid black;
+
+}
+
+#board{
+  position: absolute;
+  left: 100px;
+  top: 50px;
+  border-collapse: collapse;
+  width: 600px;
+  height: 600px;
+}
