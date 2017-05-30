@@ -59,3 +59,30 @@ var getWins = function(n){
   console.log(arr2);
   console.log(matrix);
 };
+
+
+
+// write a function to create a n x n board on html with a given n, within same width and height
+var createBoard = function(n, width, $parent){
+// n:number, is the number of cells on each side
+// width:number, is the board side lenght in pixels, the board is always perfect square
+// $parent:string, is the parent jquery element board is going to append to
+
+  var cellWidth = width/n;
+
+  var $board;
+  var $cell;
+
+  $cell.css({
+    width: cellWidth,
+    height: cellWidth,
+    fontSize: (cellWidth * 0.8) + 'px'
+  });
+
+
+  
+
+
+
+
+};

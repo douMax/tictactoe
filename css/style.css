@@ -1,48 +1,116 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro');
+
+/*font-family: 'Roboto', sans-serif;
+font-family: 'Source Sans Pro', sans-serif;*/
 
 body{
-  margin:0;
-  background-color: black;
+  margin:0 auto;
+  background-color: #1bbcdf;
+}
+
+h1{
+  text-transform: capitalize;
+  margin: 0 auto;
+}
+
+
+#right{
+  position: absolute;
+  left:5%;
+  top: 15%;
+}
+
+
+
+.msg{
+  color: #fcfdfd;
+  font-size: 24px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.token{
+  background-color: #819ca3;
+  color: #fcfdfd;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  width: 80px;
+  height: 20px;
+  margin-top: 10px;
+  border-radius: 2px;
+  border: transparent;
+}
+
+
+#restart{
+  margin: 20px auto;
+  background-color: #819ca3;
+  color: #fcfdfd;
+  font-size: 14px;
+  width: 100px;
+  height: 20px;
+  border-radius: 12px;
+  border:transparent;
 }
 
 #board{
   position: absolute;
-  left: 200px;
-  top: 100px;
+  left: 30%;
+  top: 15%;
+  margin: 0 auto;
+  padding: 0 auto;
 }
 
 .cells{
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
   position: absolute;
-  border: 2px dashed orange;
-  width: 100px;
-  height: 100px;
+  border: 2px dashed #e7e8e3;
+  width: 150px;
+  height: 150px;
   text-align: center;
-  line-height: 100px;
-  color: orange;
-  font-size: 24px;
+  line-height: 150px;
 }
-
 
 .cells:nth-child(2){
   top: 0px;
-  left: 100px;
+  left: 150px;
 }
 
 .cells:nth-child(3){
   top:0px;
-  left: 200px;
+  left: 300px;
 }
 
 #r2{
   position: absolute;
   left: 0;
-  top: 100px;
+  top: 150px;
 }
 
 #r3{
   position: absolute;
   left: 0;
-  top: 200px;
+  top: 300px;
+}
+
+
+.x::after{
+  content:"X";
+  color: hotpink;
+  font-size: 100px;
+}
+
+.o::after{
+  content:"O";
+  color: white;
+  font-size: 100px;
+}
+
+.circle{
+  background:url("../images/token-circle.png");
+  background-size: contain;
+}
+
+.triangle{
+  background:url("../images/token-triangle.png");
+  background-size: contain;
 }

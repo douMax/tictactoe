@@ -1,140 +1,176 @@
+
 $(document).ready(function(){
 
   console.log("you'll never walk alone");
-  var $body = $('body');
-  var $cells = $('.cells');
-  var toggle = true;  // switch players, switch for tokens
 
-  var playerX = [];
-  var playerO = [];
+  var $cells = $('.cells'); //select all the cells
+  var turns = 0;            // turns start at zero
+  var gameOver = false;
 
+  var player1 = 'x';  // set the default tokens to x and o
+  var player2 = 'o';
 
+  //buttons to switch token
+  var $xo = $('#xo');
+  var $pic = $('#pic');
 
-  // click to place tokens
-  var startGame = function(){
+  var $restart = $('#restart');  // button restart
+  var $msg = $('.msg');  // message div to display messages
 
-    $cells.on('click', function(){
-      var yanse;
-      var toValue;
-      var playCell = this.id;
+  $xo.on('click', function(){   // button x/o to choose x and o tokens
+    if(turns){
+      return;
+    }
+    player1 = 'x';
+    player2 = 'o';
+    console.log("token chose: " + $pic.text());
+  });
 
-      if (toggle) {
-        toVale = "X";
-        yanse = "hotpink";
-        playerX.push(this.id);
-        console.log("X: " + this.id);
-      } else {
-        toVale = "O";
-        yanse = "White";
-        playerO.push(this.id);
-        console.log("O: " + this.id);
-      }
+  $pic.on('click', function(){  // button pic to choose triangle and circle tokens
+    if(turns){
+      return;
+    }
+    player1 = 'triangle';
+    player2 = 'circle';
+    console.log("token chose: " + $pic.text());
+  });
 
-      // for now change the html value to X/O, later place a token, a div with background image
-      $(this).html(toVale);
-      $(this).css({
-        fontSize: "48px",
-        color: yanse
-      });
-
-      toggle = !toggle;
-
-      if( checkForWin(playerX) ){
-        console.log( "X wins" );
-        return;
-      }
-
-      if( checkForWin(playerO) ){
-        console.log( "O wins" );
-        return;
-      }
-
-    }); // end fo click
-
-  };
+  $restart.on('click', function(){   // button restart to reset the game
+    // location.reload();
+    gameOver = false;
+    turns = 0;
+    ttt.players[player1] = [];
+    ttt.players[player2] = [];
+    $cells.removeClass(player1);
+    $cells.removeClass(player2);
+    console.log("game restart");
+    $msg.html('');
+  });
 
 
-  //check for win
+  $cells.on('click', function(){
+    console.log(this.id);
 
-  var checkForWin = function(arr){
-
-    var row = [];
-    var col = [];
-
-    for (var i = 0; i < arr.length; i++) {
-      row.push(arr[i][0]);
-      col.push(arr[i][1]);
+    if( $(this).hasClass(player1) || $(this).hasClass(player2) ){
+      return;
+    }
+    if (gameOver){
+      return;
     }
 
-    row = row.sort();
-    col = col.sort();
-
-    var rowCheck = false;
-    for (var i = 0; i < row.length; i++) {
-      if (row[i] === row[i+1] && row[i] === row[i+2]){
-        rowCheck = true;
-      }
-    }
-
-    var colCheck = false
-    for (var i = 0; i < col.length; i++) {
-      if (col[i] === col[i+1] && col[i] === col[i+2]){
-        colCheck = true;
-      }
-    }
-
-    var diagonal = checkDiagonal(arr, 3);
-
-
-    if( rowCheck || colCheck || diagonal ){
-      return true;
+    if (turns % 2 === 0) {
+      player = player1;
+      ttt.moves(player, this.id);
+      console.log("id:" + this.id + " player: " + player);
     } else {
-      return false;
+      player = player2;
+      ttt.moves(player, this.id);
+      console.log("id:" + this.id + " player: " + player);
     }
 
-  }; // end fo checkForWin function
+    $(this).addClass(player);
 
-  //checkForDiagonal
-  var dia1 = [];
-  var dia2 = [];
+    turns++;
+    console.log("turns: " + turns);
 
-  var checkDiagonal =  function(arr, n){
-    getDiagonal(n);
-    var check1 = checkArray(dia1, arr);
-    var check2 = checkArray(dia2, arr);
-    if(check1 || check2){
-      return true;
-    }
-    return false;
-  }
-
-  var getDiagonal = function(n){
-    var arr1 = [];
-    var arr2 = [];
-
-    for (var i = 1; i <= n; i++){
-      i = String(i);
-      arr1.push(i);
-      arr2.unshift(i);
+    if(ttt.checkForWin(ttt.players[player])){
+      console.log("game over " + player + ' wins');
+      $msg.html(player + ' wins');
+      gameOver = true;
+    } else if (turns === (ttt.n)**2 ) {
+      console.log("game over draw");
+      $msg.html("draw");
+      gameOver = true;
     }
 
-    for (var i = 0; i < arr1.length; i++) {
-      dia1.push(arr1[i]+arr1[i]);
-      dia2.push(arr1[i]+arr2[i]);
-    }
-  };
+  }); // end of on click
 
-  var checkArray = function(arr1, arr2){
 
-    for (var i = 0; i < arr1.length; i++) {
-      if(arr2.indexOf(arr1[i]) == -1){
-        return false;
+
+
+  //start an object called ttt, basic game logic comes here
+  var ttt = {
+
+    n: 3,  // 3 x 3 game board
+
+    players: {
+      x: [],
+      o: [],
+
+      triangle: [],
+      circle: [],
+
+
+    },
+
+    diagonals: {
+      dia1: [],
+      dia2: [],
+    },
+
+    getDiagonal:function(n){
+      var arr1 = [];
+      var arr2 = [];
+
+      for (var i = 1; i <= n; i++){
+        i = String(i);
+        arr1.push(i);
+        arr2.unshift(i);
       }
-    }
-    return true;
-  };
+
+      for (var i = 0; i < arr1.length; i++) {
+        this.diagonals.dia1.push(arr1[i]+arr1[i]);
+        this.diagonals.dia2.push(arr1[i]+arr2[i]);
+      }
+    },
+
+    moves: function(player, cellID){
+      this.players[player].push(cellID);
+    },
+
+    checkForWin: function(currentPlayArr){
+      var rowCheck = this.otherWin(currentPlayArr, 0);
+      var colCheck = this.otherWin(currentPlayArr, 1);
+
+      this.getDiagonal(this.n);
+      var diagCheck1 = this.diagonalWin(this.diagonals.dia1, currentPlayArr);
+      var diagCheck2 = this.diagonalWin(this.diagonals.dia2, currentPlayArr);
+
+      if (rowCheck || colCheck || diagCheck1 || diagCheck2) {
+        return true;
+      }
+
+      return false;
+    },
 
 
+    diagonalWin: function(diagonal, currentPlayArr){
+      for (var i = 0; i < diagonal.length; i++) {
+        if(currentPlayArr.indexOf(diagonal[i]) == -1){
+          return false;
+        }
+      }
+      return true;
+    },
+
+    otherWin: function(currentPlayArr, index){  // rows and columns
+      var newArr = [];
+
+      for (var i = 0; i < currentPlayArr.length; i++) {
+        newArr.push(currentPlayArr[i][index]);
+      }
+      newArr = newArr.sort();
+
+      for (var i = 0; i < newArr.length; i++) {
+        if (newArr[i] === newArr[i+1] && newArr[i] === newArr[i+2]){
+          return true;
+        }
+      }
+
+      return false;
+    },
+
+  };  // end of object
 
 
 

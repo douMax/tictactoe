@@ -5,43 +5,49 @@
   <title>Play with Me</title>
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- for test -->
-  <link rel="stylesheet" href="css/test.css">
-
 
   <script
   src="https://code.jquery.com/jquery-3.2.1.js"
   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
   crossorigin="anonymous"></script>
-  <!-- <script src="js/main.js"></script> -->
-  <script src="js/test.js"></script>
+  <script src="js/main.js"></script>
 </head>
 <body>
 
-  <!-- <h1>Hey there</h1> -->
-
+  <h1>Tell the Truth</h1>
 
   <div id="board">
     <div class="rows" id="r1">
-      <div class="cells" id="11"></div>
-      <div class="cells" id="12"></div>
-      <div class="cells" id="13"></div>
+      <div class="cells" id="11" row="1" col="1"></div>
+      <div class="cells" id="12" row="1" col="2"></div>
+      <div class="cells" id="13" row="1" col="3"></div>
     </div>
 
     <div class="rows" id="r2">
-      <div class="cells" id="21"></div>
-      <div class="cells" id="22"></div>
-      <div class="cells" id="23"></div>
+      <div class="cells" id="21" row="2" col="1"></div>
+      <div class="cells" id="22" row="2" col="2"></div>
+      <div class="cells" id="23" row="2" col="3"></div>
     </div>
 
     <div class="rows" id="r3">
-      <div class="cells" id="31"></div>
-      <div class="cells" id="32"></div>
-      <div class="cells" id="33"></div>
+      <div class="cells" id="31" row="3" col="1"></div>
+      <div class="cells" id="32" row="3" col="2"></div>
+      <div class="cells" id="33" row="3" col="3"></div>
     </div>
   </div>
 
-  
+  <div id="right">
+
+    <input id="restart" class="panel" type="button" value="restart">
+
+    <div class="msg panel">Here is message</div>
+
+    <div id="tokenMenu" class="panel">
+      <div id="letr" class="token">X/O</div>
+      <div id="pic" class="token">Pics</div>
+    </div>
+
+  </div>
 
 
 </body>
