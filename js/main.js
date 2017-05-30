@@ -11,7 +11,7 @@ $(document).ready(function(){
   var player2 = 'o';
 
   //buttons to switch token
-  var $xo = $('#xo');
+  var $xo = $('#letr');
   var $pic = $('#pic');
 
   var $restart = $('#restart');  // button restart
