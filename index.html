@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Play with Me</title>
   <link rel="stylesheet" href="css/style.css">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
   <script
   src="https://code.jquery.com/jquery-3.2.1.js"
@@ -14,7 +14,7 @@
 </head>
 <body>
 
-  <h1>Tell the Truth</h1>
+  <h1>TELL THE TRUTH</h1>
 
   <div id="board">
     <div class="rows" id="r1">
@@ -38,11 +38,25 @@
 
   <div id="right">
 
-    <div id="restart" class="panel">restart</div>
+    <div id="restart" class="button">restart</div>
+    <div id="again" class="button">again</div>
 
-    <div class="msg panel">Here is message</div>
+    <div class="msg">let's play. p1 first</div>
 
-    <div id="tokenMenu" class="panel">
+    <div class="scores">
+      <div id="p1">
+        <div>p1</div>
+
+        <div class="num">0</div>
+      </div>
+      <div id="p2">
+        <div>p2</div>
+
+        <div class="num">0</div>
+      </div>
+    </div>
+
+    <div id="tokenMenu">
       <div id="letr" class="token">X/O</div>
       <div id="pic" class="token">Pics</div>
     </div>

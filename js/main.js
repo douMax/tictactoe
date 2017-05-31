@@ -1,57 +1,138 @@
 
 $(document).ready(function(){
 
-  console.log("you'll never walk alone");
 
+
+  console.log("you'll never walk alone");
+  //jquery elements
   var $cells = $('.cells'); //select all the cells
+  var $letr = $('#letr').addClass('chosen').addClass('animated bounceIn'); //buttons to switch token
+  var $pic = $('#pic');
+  var $again = $('#again');
+  var $restart = $('#restart');  // button restart
+  var $msg = $('.msg');  // message div to display messages
+  var $scoreP1 = $('#p1 .num');
+  var $scoreP2 = $('#p2 .num');
+
+  var scores = {
+    p1: 0,
+    p2: 0,
+  }
+
   var turns = 0;            // turns start at zero
   var gameOver = false;
 
-  var player1 = 'x';  // set the default tokens to x and o
-  var player2 = 'o';
+  var player ='';
+  var token = '';
+  var token1 = 'x';
+  var token2 = 'o';
 
-  //buttons to switch token
-  var $xo = $('#letr');
-  var $pic = $('#pic');
+  //storage
+  // if(!localStorage){
+  //   alert("Sorry, your browser do not support local storage.");
+  // }
 
-  var $restart = $('#restart');  // button restart
-  var $msg = $('.msg');  // message div to display messages
+  // var saveRecords = function(){
+  //   sessionStorage.setItem('scoreP1', '' + scores.p1);
+  //   sessionStorage.setItem('scoreP2', '' + scores.p2);
+  //   sessionStorage.setItem('token1', token1);
+  //   sessionStorage.setItem('token2', token2);
+  //   var movesP1 = ttt.players.p1.moves.join(',');
+  //   var movesP2 = ttt.players.p2.moves.join(',');
+  //   sessionStorage.setItem('movesP1', movesP1);
+  //   sessionStorage.setItem('movesP2', movesP2);
+  // };
+  //
+  // var getRecords = function(){
+  //   token1 = sessionStorage.getItem('token1');
+  //   token2 = sessionStorage.getItem('token2');
+  //   scores.p1 = parseInt(sessionStorage.getItem('scoreP1'));
+  //   scores.p2 = parseInt(sessionStorage.getItem('scoreP2'));
+  //   var movesP1 = sessionStorage.getItem('movesP1');
+  //   var movesP2 = sessionStorage.getItem('movesP2');
+  //   movesP1 = movesP1.split(',')
+  //   movesP2 = movesP2.split(',')
+  //   ttt.players.p1.moves = movesP1;
+  //   ttt.players.p2.moves = movesP2;
+  //   placeTokens(movesP1, token1);
+  //   placeTokens(movesP2, token2);
+  //   turns = movesP1.length + movesP2.length;
+  //   $scoreP1.text('' + scores.p1);
+  //   $scoreP2.text('' + scores.p2);
+  // };
 
-  $xo.on('click', function(){   // button x/o to choose x and o tokens
+  var placeTokens = function(idArr, token){
+    for (var i = 0; i < idArr.length; i++) {
+      var id = idArr[i];
+      $('.cells #' + id).addClass(token);
+    }
+  };
+
+  //token choose
+  var tokenChoose = function(t1, t2){
+    token1 = t1;
+    token2 = t2;
+    console.log('token: ', t1, t2);
+  };
+
+  $letr.on('click', function(){
     if(turns){
       return;
     }
-    player1 = 'x';
-    player2 = 'o';
-    console.log("token chose: " + $pic.text());
+    tokenChoose('x', 'o');
+    $(this).addClass('chosen').addClass('animated bounceIn');
+    $pic.removeClass('chosen').removeClass('animated bounceIn');
   });
 
-  $pic.on('click', function(){  // button pic to choose triangle and circle tokens
+  $pic.on('click', function(){
     if(turns){
       return;
     }
-    player1 = 'triangle';
-    player2 = 'circle';
-    console.log("token chose: " + $pic.text());
+    tokenChoose('triangle', 'circle');
+    $(this).addClass('chosen').addClass('animated bounceIn');
+    $letr.removeClass('chosen').removeClass('animated bounceIn');
   });
 
-  $restart.on('click', function(){   // button restart to reset the game
-    // location.reload();
+
+  var newRound = function(){
     gameOver = false;
     turns = 0;
-    ttt.players[player1] = [];
-    ttt.players[player2] = [];
-    $cells.removeClass(player1);
-    $cells.removeClass(player2);
-    console.log("game restart");
-    $msg.html('');
+    ttt.players.p1.moves = []; //clear the moves array
+    ttt.players.p2.moves = [];
+    $cells.removeClass(token1);     //clear the cells
+    $cells.removeClass(token2);
+    $msg.text("Let's play. p1 first");
+  }
+
+
+  // button again to reset the game but not reset the scores
+  $again.on('click', function(){
+    newRound();
+    console.log("new round");
+  });
+
+  $restart.on('click', function(){
+    newRound();
+    tokenChoose('x', 'o');
+    $letr.addClass('chosen');
+    $pic.removeClass('chosen');
+    scores.p1 = 0;
+    scores.p2 = 0;
+    $scoreP1.text(''+ scores.p1);
+    $scoreP2.text(''+ scores.p2);
+    console.log("new game");
   });
 
 
+  //token choose function
+
+
+
+  // click in one square start the game
   $cells.on('click', function(){
     console.log(this.id);
 
-    if( $(this).hasClass(player1) || $(this).hasClass(player2) ){
+    if( $(this).hasClass(token1) || $(this).hasClass(token2) ){
       return;
     }
     if (gameOver){
@@ -59,29 +140,45 @@ $(document).ready(function(){
     }
 
     if (turns % 2 === 0) {
-      player = player1;
-      ttt.moves(player, this.id);
-      console.log("id:" + this.id + " player: " + player);
+      token = token1;
+      player = "p1";
+      $msg.text("p2's turn")
     } else {
-      player = player2;
-      ttt.moves(player, this.id);
-      console.log("id:" + this.id + " player: " + player);
+      token = token2;
+      player = "p2";
+      $msg.text("p1's turn")
     }
 
-    $(this).addClass(player);
+    ttt.players[player].moves.push(this.id)
+
+    $(this).addClass(token).addClass('animated bounceIn');
+
+    console.log("id:" + this.id + ", " + player + ", " + token );
 
     turns++;
     console.log("turns: " + turns);
 
-    if(ttt.checkForWin(ttt.players[player])){
+    // check for win
+    if(ttt.checkForWin(ttt.players[player].moves)){
+      $msg.text(player + ' wins');
+      gameOver = true;
+      scores[player] += 1;
       console.log("game over " + player + ' wins');
-      $msg.html(player + ' wins');
-      gameOver = true;
+
     } else if (turns === (ttt.n)**2 ) {
-      console.log("game over draw");
-      $msg.html("draw");
+      $msg.text("draw");
       gameOver = true;
+      console.log("game over draw");
+
     }
+
+    $scoreP1.text(''+ scores.p1);
+    $scoreP2.text(''+ scores.p2);
+
+    if(gameOver === false){
+      saveRecords();
+    }
+
 
   }); // end of on click
 
@@ -94,13 +191,16 @@ $(document).ready(function(){
     n: 3,  // 3 x 3 game board
 
     players: {
-      x: [],
-      o: [],
-
-      triangle: [],
-      circle: [],
-
-
+      p1: {
+        token: 'x',
+        moves: [],
+        scores: 0
+      },
+      p2: {
+        token: 'o',
+        moves: [],
+        scores: 0
+      },
     },
 
     diagonals: {
@@ -125,7 +225,7 @@ $(document).ready(function(){
     },
 
     moves: function(player, cellID){
-      this.players[player].push(cellID);
+      this.players[player].moves.push(cellID);
     },
 
     checkForWin: function(currentPlayArr){
@@ -171,6 +271,7 @@ $(document).ready(function(){
     },
 
   };  // end of object
+
 
 
 

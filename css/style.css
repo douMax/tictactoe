@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro');
+@import url('https://fonts.googleapis.com/css?family=Nunito');
 
-/*font-family: 'Roboto', sans-serif;
-font-family: 'Source Sans Pro', sans-serif;*/
 
 body{
   margin:0 auto;
@@ -14,7 +13,7 @@ h1{
   text-align: center;
   color: #fcfdfd;
   font-size: 48px;
-
+  font-family: 'Nunito', sans-serif;
 }
 
 
@@ -22,7 +21,8 @@ h1{
   position: absolute;
   left:5%;
   top: 15%;
-  font-family: 'Roboto', sans-serif;
+  width:150px;
+  font-family: 'Nunito', sans-serif;
 }
 
 /*#right div{
@@ -33,15 +33,39 @@ h1{
 
 .msg{
   color: #fcfdfd;
-  font-size: 20px;
+  font-size: 14px;
   line-height: 40px;
   height:40px;
   text-align: center;
   margin: 20px auto;
 }
 
+.scores{
+  color: #fcfdfd;
+  font-size: 20px;
+  margin: 20px auto;
+  width: 120px;
+}
+
+
+
+#p1 *{
+
+  display: inline-block;
+}
+#p2 *{
+  display: inline-block;
+}
+
+.num{
+  float: right;
+}
+
+.chosen{
+  background-color: #22313f;
+}
+
 .token{
-  background-color: #1e8bc3;
   color: #fcfdfd;
   font-size: 14px;
   line-height: 30px;
@@ -54,19 +78,27 @@ h1{
   cursor: pointer;
 }
 
+#again{
+  background-color: #1bbc98;
+}
 
 #restart{
-  background-color: #1bbc98;
+  background-color: #e26a6a;
+}
+
+.button{
   color: #fcfdfd;
   font-size: 20px;
   line-height: 40px;
   text-align: center;
   width: 120px;
   height: 40px;
-  margin: 20px auto;
+  margin: 10px auto;
   border-radius: 2px;
   border:transparent;
+  cursor: pointer;
 }
+
 
 #board{
   position: absolute;

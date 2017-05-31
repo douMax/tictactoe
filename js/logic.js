@@ -79,10 +79,9 @@ var createBoard = function(n, width, $parent){
     fontSize: (cellWidth * 0.8) + 'px'
   });
 
-
-  
-
-
-
-
 };
+
+
+// AI
+
+var board
