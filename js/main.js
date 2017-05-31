@@ -22,10 +22,6 @@ $(document).ready(function(){
   var turns = 0;            // turns start at zero
   var gameOver = false;
 
-  var player ='';
-  var token = '';
-  var token1 = 'x';
-  var token2 = 'o';
 
   //storage
   // if(!localStorage){
@@ -70,7 +66,7 @@ $(document).ready(function(){
 
   //token choose
   var tokenChoose = function(t1, t2){
-    token1 = t1;
+    ttt.players.p1. = t1;
     token2 = t2;
     console.log('token: ', t1, t2);
   };
@@ -132,6 +128,11 @@ $(document).ready(function(){
   $cells.on('click', function(){
     console.log(this.id);
 
+    var token1 = ttt.players.p1.token;
+    var token2 = ttt.players.p2.token;
+    var token;
+    var player;
+
     if( $(this).hasClass(token1) || $(this).hasClass(token2) ){
       return;
     }
@@ -151,7 +152,7 @@ $(document).ready(function(){
 
     ttt.players[player].moves.push(this.id)
 
-    $(this).addClass(token).addClass('animated bounceIn');
+    $(this).addClass(token);
 
     console.log("id:" + this.id + ", " + player + ", " + token );
 
@@ -162,7 +163,7 @@ $(document).ready(function(){
     if(ttt.checkForWin(ttt.players[player].moves)){
       $msg.text(player + ' wins');
       gameOver = true;
-      scores[player] += 1;
+      ttt.players[player].scores += 1;
       console.log("game over " + player + ' wins');
 
     } else if (turns === (ttt.n)**2 ) {
@@ -208,69 +209,66 @@ $(document).ready(function(){
       dia2: [],
     },
 
-    getDiagonal:function(n){
-      var arr1 = [];
-      var arr2 = [];
+  var getDiagonal = function(n){
+    var arr1 = [];
+    var arr2 = [];
 
-      for (var i = 1; i <= n; i++){
-        i = String(i);
-        arr1.push(i);
-        arr2.unshift(i);
+    for (var i = 1; i <= n; i++){
+      i = String(i);
+      arr1.push(i);
+      arr2.unshift(i);
+    }
+
+    for (var i = 0; i < arr1.length; i++) {
+      this.diagonals.dia1.push(arr1[i]+arr1[i]);
+      this.diagonals.dia2.push(arr1[i]+arr2[i]);
+    }
+  };
+
+  checkForWin = function(currentPlayArr){
+
+    var rowCheck = this.otherWin(currentPlayArr, 0);
+    var colCheck = this.otherWin(currentPlayArr, 1);
+
+    this.getDiagonal(this.n);
+    var diagCheck1 = this.diagonalWin(this.diagonals.dia1, currentPlayArr);
+    var diagCheck2 = this.diagonalWin(this.diagonals.dia2, currentPlayArr);
+
+    if (rowCheck || colCheck || diagCheck1 || diagCheck2) {
+      return true;
+    }
+
+    return false;
+  };
+
+
+  diagonalWin = function(diagonal, currentPlayArr){
+    for (var i = 0; i < diagonal.length; i++) {
+      if(currentPlayArr.indexOf(diagonal[i]) == -1){
+        return false;
       }
+    }
+    return true;
+  },
 
-      for (var i = 0; i < arr1.length; i++) {
-        this.diagonals.dia1.push(arr1[i]+arr1[i]);
-        this.diagonals.dia2.push(arr1[i]+arr2[i]);
-      }
-    },
+  otherWin = function(currentPlayArr, index){  // rows and columns
+    var newArr = [];
 
-    moves: function(player, cellID){
-      this.players[player].moves.push(cellID);
-    },
+    for (var i = 0; i < currentPlayArr.length; i++) {
+      newArr.push(currentPlayArr[i][index]);
+    }
+    newArr = newArr.sort();
 
-    checkForWin: function(currentPlayArr){
-      var rowCheck = this.otherWin(currentPlayArr, 0);
-      var colCheck = this.otherWin(currentPlayArr, 1);
-
-      this.getDiagonal(this.n);
-      var diagCheck1 = this.diagonalWin(this.diagonals.dia1, currentPlayArr);
-      var diagCheck2 = this.diagonalWin(this.diagonals.dia2, currentPlayArr);
-
-      if (rowCheck || colCheck || diagCheck1 || diagCheck2) {
+    for (var i = 0; i < newArr.length; i++) {
+      if (newArr[i] === newArr[i+1] && newArr[i] === newArr[i+2]){
         return true;
       }
+    }
 
-      return false;
-    },
+    return false;
+  };
 
-
-    diagonalWin: function(diagonal, currentPlayArr){
-      for (var i = 0; i < diagonal.length; i++) {
-        if(currentPlayArr.indexOf(diagonal[i]) == -1){
-          return false;
-        }
-      }
-      return true;
-    },
-
-    otherWin: function(currentPlayArr, index){  // rows and columns
-      var newArr = [];
-
-      for (var i = 0; i < currentPlayArr.length; i++) {
-        newArr.push(currentPlayArr[i][index]);
-      }
-      newArr = newArr.sort();
-
-      for (var i = 0; i < newArr.length; i++) {
-        if (newArr[i] === newArr[i+1] && newArr[i] === newArr[i+2]){
-          return true;
-        }
-      }
-
-      return false;
-    },
-
-  };  // end of object
+  // end of object
 
 
 
