@@ -25,15 +25,15 @@ h1{
   font-family: 'Nunito', sans-serif;
 }
 
-/*#right div{
+*{
   border: 1px solid red;
-}*/
+}
 
 
 
 .msg{
   color: #fcfdfd;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 40px;
   height:40px;
   text-align: center;
@@ -153,12 +153,12 @@ h1{
   font-size: 100px;
 }
 
-.circle{
-  background:url("../images/token-circle.png");
+.moon{
+  background:url("../images/token-moonstars.png");
   background-size: contain;
 }
 
-.triangle{
-  background:url("../images/token-triangle.png");
+.sun{
+  background:url("../images/token-sunshine.png");
   background-size: contain;
 }
