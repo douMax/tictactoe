@@ -9,10 +9,10 @@ body{
 
 h1{
   text-transform: capitalize;
-  margin: 15px auto;
+  margin: 10px auto;
   text-align: center;
   color: #fcfdfd;
-  font-size: 48px;
+  font-size: 32px;
   font-family: 'Nunito', sans-serif;
 }
 
@@ -21,14 +21,14 @@ h1{
   position: absolute;
   left:5%;
   top: 15%;
-  width:150px;
+  width:200px;
   font-family: 'Nunito', sans-serif;
 }
 
-*{
+/**{
   border: 1px solid red;
 }
-
+*/
 
 
 .msg{
@@ -42,20 +42,67 @@ h1{
 
 .scores{
   color: #fcfdfd;
-  font-size: 20px;
-  margin: 20px auto;
-  width: 100px;
+  font-size: 24px;
+  width: 120px;
+  position:relative;
+  left:40px;
+  top:-10px;
 }
 
+/*#p1{
+  margin-top: 0;
+}
 
+#p2{
+  margin-top: 0;
+}*/
+
+.pName{
+  vertical-align: top;
+}
 
 #p1 *{
-
   display: inline-block;
+  height: 40px;
+  line-height: 40px;
 }
+
 #p2 *{
   display: inline-block;
+  line-height: 40px;
+  height:40px;
 }
+
+#p1{
+  height: 50px;
+  margin: 0 auto;
+}
+
+#p2{
+  height: 50px;
+  margin: 0 auto;
+}
+
+
+.symbol{
+
+  width:40px;
+  height:40px;
+  text-align: center;
+}
+
+.p1x::after{
+  content:" X";
+  color: hotpink;
+  font-size: 24px;
+}
+
+.p2o::after{
+  content:" O";
+  color: white;
+  font-size: 24px;
+}
+
 
 .num{
   float: right;
@@ -103,41 +150,55 @@ h1{
 #board{
   position: absolute;
   left: 30%;
-  top: 15%;
+  top: 5%;
+  /*top:20px;
+  left: 300px;*/
   margin: 0 auto;
   padding: 0 auto;
 }
 
+
+/*.cells:hover{
+  background-color: #f7ca18;
+  opacity: 0.5;
+}*/
+
+.mouseOnCell{
+  background-color: #f7ca18;
+  opacity: 0.5;
+}
+
+
 .cells{
   position: absolute;
   border: 2px dashed #fcfdfd;
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   text-align: center;
-  line-height: 150px;
+  line-height: 200px;
   cursor: pointer;
 }
 
 .cells:nth-child(2){
   top: 0px;
-  left: 150px;
+  left: 200px;
 }
 
 .cells:nth-child(3){
   top:0px;
-  left: 300px;
+  left: 400px;
 }
 
 #r2{
   position: absolute;
   left: 0;
-  top: 150px;
+  top: 200px;
 }
 
 #r3{
   position: absolute;
   left: 0;
-  top: 300px;
+  top: 400px;
 }
 
 

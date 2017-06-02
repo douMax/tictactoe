@@ -14,8 +14,6 @@
 </head>
 <body>
 
-  <h1>TELL THE TRUTH</h1>
-
   <div id="board">
     <div class="rows" id="r1">
       <div class="cells" id="11" row="1" col="1"></div>
@@ -38,6 +36,7 @@
 
   <container id="right">
 
+    <h1>TicTacToe</h1>
     <div id="restart" class="button">new game</div>
     <div id="again" class="button">new round</div>
 
@@ -45,19 +44,19 @@
 
     <div class="scores">
       <div id="p1">
-        <div>p1</div>
-
+        <div class="pName">p1</div>
+        <div class="symbol p1x"></div>
         <div class="num">0</div>
       </div>
       <div id="p2">
-        <div>p2</div>
-
+        <div class="pName">p2</div>
+        <div class="symbol p2o"></div>
         <div class="num">0</div>
       </div>
     </div>
 
     <div id="tokenMenu">
-      <div id="letr" class="token">X/O</div>
+      <div id="letr" class="token chosen animated bounceIn">X/O</div>
       <div id="pic" class="token">Pics</div>
     </div>
 

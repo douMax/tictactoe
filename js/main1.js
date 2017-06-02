@@ -3,6 +3,7 @@ $(document).ready(function(){
 
   console.log("you'll never walk alone");
 
+  // debugger;
   var gameState = {
     p1:{
       moves: [],
@@ -21,8 +22,52 @@ $(document).ready(function(){
   var gameOver = false;
 
 
-  //indicate the default tokens = x/o
-  $('#letr').addClass('chosen').addClass('animated bounceIn');
+  //===================== save game and load game ==================================
+  var placeTokens = function(player){
+    var idArr = gameState[player].moves;
+    for (var i = 0; i < idArr.length; i++) {
+      var id = idArr[i];
+      $('#' + id).addClass(gameState[player].token);
+    }
+    return idArr.length;
+  };
+
+  if(sessionStorage.length){
+    gameState = JSON.parse(sessionStorage.gameState);
+    // debugger;
+    var length1 = placeTokens('p1');
+    var length2 = placeTokens('p2');
+
+    if(gameState.p1.tokens !== 'x'){
+      $('#letr').removeClass('chosen');
+      $('#pic').addClass('chosen').addClass('animated bounceIn')
+    }
+
+    $('#p1 .num').text(''+ gameState.p1.score);
+    $('#p2 .num').text(''+ gameState.p2.score);
+
+    turns = length1 + length2;
+
+    if (turns % 2 === 0){
+      $('.msg').text("game continued. p1's turn")
+    } else {
+      $('.msg').text("game continued. p2's turn")
+    }
+
+    if(turns === 0) {
+      $('.msg').text("let's play. p1 first")
+    }
+
+
+  }
+
+  // check if session storage is supoorted
+  var save = true;
+  if(sessionStorage === undefined){
+    save = false;
+  }
+
+  //====================== token choose, reset button ==============================
 
   //choose token
   var tokenChoose = function(t1, t2){
@@ -38,6 +83,13 @@ $(document).ready(function(){
     tokenChoose('x', 'o');
     $(this).addClass('chosen').addClass('animated bounceIn');
     $('#pic').removeClass('chosen').removeClass('animated bounceIn');
+    $('#p1 .symbol').addClass('p1x').removeClass('sun');
+    $('#p2 .symbol').addClass('p2o').removeClass('moon');
+
+    if(save){
+      sessionStorage.setItem('gameState', JSON.stringify(gameState));
+    }
+
   });
 
   $('#pic').on('click', function(){
@@ -47,6 +99,13 @@ $(document).ready(function(){
     tokenChoose('sun', 'moon');
     $(this).addClass('chosen').addClass('animated bounceIn');
     $('#letr').removeClass('chosen').removeClass('animated bounceIn');
+    $('#p1 .symbol').addClass('sun').removeClass('p1x');
+    $('#p2 .symbol').addClass('moon').removeClass('p2o');
+
+    if(save){
+      sessionStorage.setItem('gameState', JSON.stringify(gameState));
+    }
+
   });
 
 
@@ -59,10 +118,16 @@ $(document).ready(function(){
     $('.cells').removeClass(gameState.p1.token);     //clear the cells
     $('.cells').removeClass(gameState.p2.token);
     $('.msg').text("let's play. p1 first");
+
   }
 
   $('#again').on('click', function(){  // click 'again' to start a new round
     newRound();
+
+    if(save){
+      sessionStorage.setItem('gameState', JSON.stringify(gameState));
+    }
+
     console.log("new round");
   });
 
@@ -72,22 +137,47 @@ $(document).ready(function(){
     gameState.p2.score = 0;
     $('#p1 .num').text(''+ gameState.p1.score);
     $('#p2 .num').text(''+ gameState.p1.score);
+
+    if(save){
+      sessionStorage.setItem('gameState', JSON.stringify(gameState));
+    }
+
     console.log("new game");
+  });
+
+  //=============================== click to play the game ========================
+
+
+  $('.cells').hover(function(){
+    if( $(this).hasClass(gameState.p1.token) || $(this).hasClass(gameState.p2.token) ){
+      return;
+    }
+    $(this).addClass('mouseOnCell');
+  }, function(){
+    $(this).removeClass('mouseOnCell');
   });
 
 
 
   $('.cells').on( 'click', function(){
     console.log(this.id);
-
     var token1 = gameState.p1.token;
     var token2 = gameState.p2.token;
+
     var token;
     var player;
 
+    $(this).removeClass('mouseOnCell');  // click to place a token and remove the overshade
+
     if( $(this).hasClass(token1) || $(this).hasClass(token2) ){
+      var $msg = $('.msg').text();
+      $('.msg').text('choose another square');
+      window.setTimeout(function(){
+        $('.msg').text($msg)
+      }, 500);
       return;
     }
+
     if (gameOver){
       return;
     }
@@ -127,22 +217,14 @@ $(document).ready(function(){
     $('#p1 .num').text(''+ gameState.p1.score);
     $('#p2 .num').text(''+ gameState.p2.score);
 
+    if(save){
+      sessionStorage.setItem('gameState', JSON.stringify(gameState));
+    }
+
   } ); // end of on click
 
 
-
-
-
-
-  var placeTokens = function(idArr, token){
-    for (var i = 0; i < idArr.length; i++) {
-      var id = idArr[i];
-      $('.cells #' + id).addClass(token);
-    }
-  };
-
-
-
+  //============================= check for win ====================================
 
   //basic game logic comes here
   var dia1 = [];
@@ -212,7 +294,7 @@ $(document).ready(function(){
   };
 
 
-  // ===================== AI comes here ========================
+  // ============================== AI comes here ================================
 
   var modeAI = false;
 
@@ -344,11 +426,6 @@ $(document).ready(function(){
 
     return [a1, a2, a3, b1, b2, b3, c1, c2, c3];
   };
-
-
-
-
-
 
 
 
