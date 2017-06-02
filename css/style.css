@@ -93,13 +93,13 @@ h1{
 
 .p1x::after{
   content:" X";
-  color: hotpink;
+  color: #F4B350;
   font-size: 24px;
 }
 
 .p2o::after{
   content:" O";
-  color: white;
+  color: #E26A6A;
   font-size: 24px;
 }
 
@@ -204,13 +204,13 @@ h1{
 
 .x::after{
   content:"X";
-  color: hotpink;
+  color: #F4B350;
   font-size: 100px;
 }
 
 .o::after{
   content:"O";
-  color: white;
+  color: #E26A6A;
   font-size: 100px;
 }
 
