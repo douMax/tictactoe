@@ -1,19 +1,21 @@
 
 var player;   // current player
 var token;    // current token in use
+var nexturnMsg; // who's next turn
+var message;  // global variable, store the message
+
 
 var whichPlayer = function(){
-
-
   if(tunrs % 2 === 0 ){
     player = 'p1';
     token = gameState[player].token;
-  } else{
+    nexturnMsg = "p2's turn"
+  } else {
     player = 'p2';
     token = gameState[player].token;
+    nexturnMsg = "p1's turn"
   }
-
-}
+};
 
 
 
