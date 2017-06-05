@@ -1,4 +1,4 @@
-# Tic Tac Toe project
+# Project[0]: TicTacToe
 
 ## smaller heading
 

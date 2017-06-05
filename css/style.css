@@ -11,9 +11,11 @@ h1{
   text-transform: capitalize;
   margin: 10px auto;
   text-align: center;
-  color: #fcfdfd;
+  color: #F4B350;
+  background-color: #22313f;
   font-size: 32px;
   font-family: 'Nunito', sans-serif;
+  border-top-right-radius: 20px;
 }
 
 
@@ -61,6 +63,11 @@ h1{
   vertical-align: top;
 }
 
+/*.icon{
+  border-radius: 50%;
+  width:20px;
+}*/
+
 #p1 *{
   display: inline-block;
   height: 40px;
@@ -85,7 +92,6 @@ h1{
 
 
 .symbol{
-
   width:40px;
   height:40px;
   text-align: center;
@@ -125,12 +131,20 @@ h1{
   cursor: pointer;
 }
 
-#again{
+#again:hover{
   background-color: #1bbc98;
 }
 
-#restart{
+#restart:hover{
   background-color: #e26a6a;
+}
+
+#again{
+  background-color: #1bbc9850;
+}
+
+#restart{
+  background-color: #e26a6a50;
 }
 
 .button{
@@ -138,7 +152,7 @@ h1{
   font-size: 20px;
   line-height: 40px;
   text-align: center;
-  width: 120px;
+  width: 200px;
   height: 40px;
   margin: 10px auto;
   border-radius: 2px;
